@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans  xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:property-placeholder location="classpath:gameGenre.properties"/>
+
+    <bean id="roleBean"
+          class="org.example.RolePlay"
+    init-method="roleInit"
+    destroy-method="roleDestroy"
+    factory-method="getRole">
+    </bean>
+
+    <bean id="realTimeStrategyBean"
+          class="org.example.RealTimeStrategy">
+
+    </bean>
+
+
+    <bean id="gamePlay"
+          scope="prototype"
+          class="org.example.GameGenre">
+        <property name="genre" ref="roleBean"/>
+        <property name="name" value="${gamePlay.name}"/>
+        <property name="duration" value="${gamePlay.duration}"/>
+    </bean>
+
+
+    <bean id="gameList"
+          class="org.example.GameGenre">
+        <property name="genreList">
+
+            <list>
+                <ref bean="roleBean"/>
+                <ref bean="realTimeStrategyBean"/>
+            </list>
+        </property>
+        <property name="name" value="${gamePlay.name}"/>
+        <property name="duration" value="${gamePlay.duration}"/>
+    </bean>
+
+</beans>
